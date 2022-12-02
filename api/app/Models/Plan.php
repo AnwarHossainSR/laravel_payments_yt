@@ -5,13 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class Plan extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'name',
         'price',
-        'image',
+        'interval',
+        'trial_period_days',
+        'lookup_key',
+        'st_plan_id'
     ];
 }

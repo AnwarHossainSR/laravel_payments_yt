@@ -4,40 +4,44 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Payment;
-use App\Models\Product;
+use App\Models\Plan;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PaymentController extends Controller
 {
-    public function checkout(Request $request, $id)
+
+    public function checkout(Request $request, $plan_id)
     {
+        $plan = Plan::find($plan_id);
         \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-        $product = Product::find($id);
+        // $prices = \Stripe\Price::all([
+        //     'lookup_keys' => [$request->lookup_key],
+        //     'expand' => ['data.product'],
+        // ]);
+        $lineItems = [[
+            'price' => $plan->st_plan_id,
+            'quantity' => 1,
+        ]];
+
         $session = \Stripe\Checkout\Session::create([
             'payment_method_types' => ['card'],
-            "customer_creation" => 'always',
-            'phone_number_collection' => [
-                'enabled' => true,
+            // 'phone_number_collection' => [
+            //     'enabled' => true,
+            // ],
+            'customer_email' => $request->email,
+            'line_items' => $lineItems,
+            'mode' => 'subscription',
+            'subscription_data' => [
+                'trial_from_plan' => true,
             ],
-            'line_items' => [[
-                'price_data' => [
-                    'currency' => 'usd',
-                    'product_data' => [
-                        'name' => $product->name,
-                    ],
-                    'unit_amount' => $product->price * 100,
-                ],
-                'quantity' => 1,
-            ]],
-            'mode' => 'payment',
             'success_url' => route('checkout.success', [], true) . "?session_id={CHECKOUT_SESSION_ID}",
             'cancel_url' => route('checkout.cancel', [], true),
         ]);
 
         $order = new Order();
         $order->status = 'unpaid';
-        $order->total_price = $product->price;
+        $order->total_price = $plan->price;
         $order->session_id = $session->id;
         $order->user_id = auth()->user()->id;
         $order->save();
@@ -58,7 +62,7 @@ class PaymentController extends Controller
             if (!$session) {
                 throw new NotFoundHttpException();
             }
-            
+
             $order = Order::where('session_id', $session->id)->first();
             if (!$order) {
                 throw new NotFoundHttpException();

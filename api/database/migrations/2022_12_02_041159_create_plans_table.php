@@ -13,11 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('plans', function (Blueprint $table) {
             $table->id();
             $table->string('name', 255);
             $table->decimal('price', 7);
-            $table->string('image', 1024)->nullable();
+            $table->string('interval');
+            $table->integer('trial_period_days');
+            $table->string('lookup_key', 255);
+            $table->string('st_plan_id', 255);
             $table->timestamps();
         });
     }
