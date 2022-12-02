@@ -15,6 +15,14 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
+            $table->decimal('total', 8, 2)->nullable();
+            $table->string('st_cus_id', 1024)->nullable();
+            $table->string('st_sub_id', 1024)->nullable();
+            $table->string('st_plan_id', 1024)->nullable();
+            $table->string('st_invoice_id', 1024)->nullable();
+            $table->string('st_payment_method', 1024)->nullable();
+            $table->string('st_payment_status', 1024)->nullable();
+            $table->string('date')->nullable();
             $table->timestamps();
         });
     }
