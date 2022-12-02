@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Payment;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -19,17 +20,16 @@ class PaymentController extends Controller
             'phone_number_collection' => [
                 'enabled' => true,
             ],
-            'line_items' => [
-                [
+            'line_items' => [[
+                'price_data' => [
                     'currency' => 'usd',
                     'product_data' => [
                         'name' => $product->name,
-                        'images' => [$product->image]
                     ],
                     'unit_amount' => $product->price * 100,
                 ],
                 'quantity' => 1,
-            ],
+            ]],
             'mode' => 'payment',
             'success_url' => route('checkout.success', [], true) . "?session_id={CHECKOUT_SESSION_ID}",
             'cancel_url' => route('checkout.cancel', [], true),
@@ -41,11 +41,14 @@ class PaymentController extends Controller
         $order->session_id = $session->id;
         $order->user_id = auth()->user()->id;
         $order->save();
-        return redirect($session->url);
+        return response()->json([
+            'url' => $session->url
+        ]);
     }
 
     public function success(Request $request)
     {
+
         $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
         $sessionId = $request->get('session_id');
         try {
@@ -55,7 +58,7 @@ class PaymentController extends Controller
             if (!$session) {
                 throw new NotFoundHttpException();
             }
-            $customer = $stripe->customers->retrieve($session->customer);
+            
             $order = Order::where('session_id', $session->id)->first();
             if (!$order) {
                 throw new NotFoundHttpException();
@@ -64,6 +67,16 @@ class PaymentController extends Controller
                 $order->status = 'paid';
                 $order->save();
             }
+
+            $payment = new Payment();
+            $payment->order_id = $order->id;
+            $payment->st_cus_id = $session->customer;
+            $payment->st_sub_id = $session->subscription;
+            $payment->st_payment_intent_id = $session->payment_intent;
+            $payment->st_payment_method = $session->payment_method_types[0];
+            $payment->st_payment_status = $session->payment_status;
+            $payment->date = $session->created;
+            $payment->save();
 
             return redirect()->away('http://localhost:3000/payment/success');
         } catch (\Exception $e) {
