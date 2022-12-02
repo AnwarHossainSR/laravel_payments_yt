@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { post } from '../api/CallAPi';
 
 const Login = () => {
+  const [token, settoken] = useState(localStorage.getItem('token'));
   const navigate = useNavigate();
   const emailRef = React.useRef();
   const passwordRef = React.useRef();
