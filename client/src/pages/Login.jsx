@@ -3,23 +3,29 @@ import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { post } from '../api/CallAPi';
 
 const Login = () => {
-  const [token, settoken] = useState(localStorage.getItem('token'));
+  const [token, setToken] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
-  const emailRef = React.useRef();
-  const passwordRef = React.useRef();
+  const emailRef = useRef();
+  const passwordRef = useRef();
 
   const handleSubmit = async () => {
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
     const res = await post('/login', { email, password });
+    if (res.errors) {
+      setError(res.message);
+    }
+    if (res.status === false && !res.errors) {
+      setError(res.message);
+    }
     if (res.data.status === true) {
       localStorage.setItem('token', res.data.token);
       navigate('/plans');
@@ -29,13 +35,13 @@ const Login = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
+      setToken(token);
       navigate('/plans');
     }
   }, [token]);
 
   return (
     <Container component='main' maxWidth='xs'>
-      <CssBaseline />
       <Box
         sx={{
           marginTop: 8,
@@ -50,6 +56,7 @@ const Login = () => {
         <Typography component='h1' variant='h5'>
           Sign in
         </Typography>
+
         <Box noValidate sx={{ mt: 1 }}>
           <TextField
             margin='normal'
@@ -73,6 +80,11 @@ const Login = () => {
             inputRef={passwordRef}
             //autoComplete='current-password'
           />
+          {error && (
+            <Typography mt={1} color='error' textAlign={'center'}>
+              {error}
+            </Typography>
+          )}
           <Button
             type='submit'
             fullWidth

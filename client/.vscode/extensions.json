@@ -1,9 +1,0 @@
-{
-  "recommendations": [
-    "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode",
-    "EditorConfig.EditorConfig",
-    "mikestead.dotenv"
-    //"antfu.vite"
-  ]
-}

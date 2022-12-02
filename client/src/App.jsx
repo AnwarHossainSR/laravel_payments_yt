@@ -9,7 +9,6 @@ const App = () => {
     <Stack>
       <Routes>
         <Route path='/' element={<Login />} />
-
         <Route path='plans/*' element={<Protected />}>
           <Route index element={<Plan />} />
           <Route path='dashboard' element={<Dashboard />} />

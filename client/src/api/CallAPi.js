@@ -1,13 +1,16 @@
 import axios from 'axios';
 
-let token = localStorage.getItem('token');
 
-axios.defaults.baseURL = 'http://localhost:8000/api';
-axios.defaults.headers.common = { Authorization: `bearer ${token}` };
+
+const token = localStorage.getItem("token");
+axios.defaults.baseURL = "http://localhost:8000/api";
+axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
+axios.defaults.headers.post["Content-Type"] =
+  "application/x-www-form-urlencoded";
 
 //get api
-export const get = (url, params) => {
-  return axios.get(url, { params });
+export const get = async (url) => {
+  return await axios.get(url);
 };
 
 //post api
