@@ -13,13 +13,8 @@ export const get = (url, params) => {
 //post api
 export const post = async (url, data) => {
   try {
-    console.log(data);
     return await axios.post(url, data);
   } catch (error) {
-    if (error.Ax) {
-      console.log(error.response.data);
-      console.log(error.response.status);
-      console.log(error.response.headers);
-    }
+    return error.response.data;
   }
 };

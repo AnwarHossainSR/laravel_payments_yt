@@ -6,20 +6,32 @@ import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import React from 'react';
-import { get, post } from '../api/CallAPi';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { post } from '../api/CallAPi';
 
 const Login = () => {
+  const navigate = useNavigate();
   const emailRef = React.useRef();
   const passwordRef = React.useRef();
 
   const handleSubmit = async () => {
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
-
     const res = await post('/login', { email, password });
-    console.log(res);
+    if (res.data.status === true) {
+      localStorage.setItem('token', res.data.token);
+      navigate('/plans');
+    }
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate('/plans');
+    }
+  }, [token]);
+
   return (
     <Container component='main' maxWidth='xs'>
       <CssBaseline />

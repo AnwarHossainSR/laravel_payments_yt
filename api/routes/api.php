@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::post('/login', [AuthController::class, 'loginUser'])->name('login');
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/checkout/{id}', [PaymentController::class, 'checkout']);
     Route::get('/plans', [PlanController::class, 'getPlans']);
