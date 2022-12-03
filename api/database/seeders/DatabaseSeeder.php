@@ -14,10 +14,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+
+        $this->call([
+            PlanSeeder::class,
+        ]);
         \App\Models\User::factory()->create([
             'name' => 'Developmnet Kit',
             'email' => 'dk@gmail.com',
             'password' => bcrypt('password'),
+            'plan_id' => 1
         ]);
         \App\Models\User::factory(10)->create();
     }

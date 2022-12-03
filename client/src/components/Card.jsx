@@ -1,8 +1,8 @@
 import { Button, Stack } from '@mui/material';
 import * as React from 'react';
+import { colors } from '../utils/color';
 
-const Card = ({ buttonColor }) => {
-  //Create a pricing card by material ui 5
+const Card = ({ plan, index }) => {
   return (
     <Stack
       sx={{
@@ -23,19 +23,20 @@ const Card = ({ buttonColor }) => {
           borderRadius: 10,
           p: 4,
           textAlign: 'center',
+          height: 'auto',
         }}
       >
-        <h2>Personal</h2>
+        <h2>{plan?.name}</h2>
         <p>Get the party started</p>
-        <h2>$9.99</h2>
-        <p>per month</p>
+        <h2>${plan?.price}</h2>
+        <p>per {plan?.interval}</p>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut,
-          voluptatum.
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. At, eos
+          deserunt? Sunt unde fugiat atque?
         </p>
         <Button
           variant='contained'
-          sx={{ background: buttonColor, borderRadius: 10 }}
+          sx={{ background: colors[index], borderRadius: 10, my: 2, py: 1 }}
         >
           Get Started
         </Button>

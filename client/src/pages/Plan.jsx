@@ -1,30 +1,42 @@
 import { Button, Stack } from '@mui/material';
-import { useEffect } from 'react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { get } from '../api/CallAPi';
 import Card from '../components/Card';
 
 const Plan = () => {
+  const [plans, setPlans] = useState([]);
   const navigate = useNavigate();
   const handleLogout = () => {
-    localStorage.removeItem('token');
+    localStorage.clear();
     get('/logout');
     navigate('/');
   };
 
   useEffect(() => {
+    axios.defaults.headers.common = {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    };
     const getData = async () => {
       const res = await get('/plans');
-      console.log(res);
+      if (res.status === 200) setPlans(res.data.data);
     };
-
     getData();
   }, []);
 
   return (
     <Stack>
-      <Stack display={'flex'} justifyContent='center' flexDirection={'row'} mt={3}>
-        <Button onClick={() => navigate('/plan/dashboard')} sx={{ width: 100 }}>
+      <Stack
+        display={'flex'}
+        justifyContent='center'
+        flexDirection={'row'}
+        mt={3}
+      >
+        <Button
+          onClick={() => navigate('/plans/dashboard')}
+          sx={{ width: 100 }}
+        >
           Dashboard
         </Button>
         <Button onClick={handleLogout} sx={{ width: 100 }}>
@@ -40,9 +52,9 @@ const Plan = () => {
           gap: 4,
         }}
       >
-        <Card buttonColor='#9c27b0' />
-        <Card buttonColor='#ff9100' />
-        <Card buttonColor='#4615b2' />
+        {plans.map((plan, index) => (
+          <Card key={plan.id} plan={plan} index={index} />
+        ))}
       </Stack>
     </Stack>
   );

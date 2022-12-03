@@ -28,6 +28,7 @@ const Login = () => {
     }
     if (res.data.status === true) {
       localStorage.setItem('token', res.data.token);
+      localStorage.setItem('user', JSON.stringify(res.data.user));
       navigate('/plans');
     }
   };

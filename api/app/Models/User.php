@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'sub_id'
     ];
 
     /**
@@ -41,4 +42,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the sub that owns the user.
+     */
+    public function plan()
+    {
+        return $this->hasOne(Plan::class, 'id', 'plan_id');
+    }
 }
