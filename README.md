@@ -106,7 +106,7 @@ Don't forget to give the project a star! Thanks again!
 
 ## Contact
 
-Your Name - [@mahedianwar](https://twitter.com/mahedianwar) - email@example.com
+Your Name - [@mahedianwar](https://twitter.com/mahedianwar) - mahedianwar@gmail.com
 
 Project Link: [https://github.com/your_username/repo_name]([https://github.com/your_username/repo_name](https://github.com/AnwarHossainSR/laravel_payments_yt))
 
