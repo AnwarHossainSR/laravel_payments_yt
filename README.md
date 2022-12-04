@@ -144,25 +144,25 @@ _Below is an example of how you can instruct your audience on installing and set
 
 4. For API
 
-  ```js
+   ```sh
       cd api
    ```
-  ```js
+   ```sh
       composer install
    ```
-   ```js
+   ```sh
      cp .env.example .env or copy .env.example .env
    ```
-    ```js
+    ```sh
      php artisan key:generate
    ```
-    ```js
+    ```sh
      set your database name and credential in .env file
    ```
-   ```js
+   ```sh
      php artisan migrate:fresh --seed
    ```
-    ```js
+    ```sh
      php artisan serve
    ```
    
