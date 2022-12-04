@@ -129,25 +129,26 @@ _Below is an example of how you can instruct your audience on installing and set
 3. For React , Install NPM packages
 
    ```sh
-   yarn
+   yarn install or npm install
    ```
 
 4. Enter your API
 
    ```js
-     Run composer install
+      composer install
    ```
-Run cp .env.example .env or copy .env.example .env
-
-Run php artisan key:generate
-
-Run php artisan migrate
-
-Run php artisan db:seed
-
-Run php artisan serve
-
-Go to link localhost:8000 OR 127.0.0.1:8000
+   ```js
+     cp .env.example .env or copy .env.example .env
+   ```
+    ```js
+     php artisan key:generate
+   ```
+   ```js
+     php artisan migrate:fresh --seed
+   ```
+    ```js
+     php artisan serve
+   ```
    
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
