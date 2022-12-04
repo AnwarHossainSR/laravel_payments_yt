@@ -73,15 +73,14 @@
 
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Product Name Screen Shot][product-screenshot]](React-Laravel-Payment-Integration.png)
 
-There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
+Laravel and react stripe payment integration with free trial featue
 
 Here's why:
 
-- Your time should be focused on creating something amazing. A project that solves a problem and helps others
-- You shouldn't be doing the same tasks over and over like creating a README from scratch
-- You should implement DRY principles to the rest of your life :smile:
+- You can implement stripe with laravel
+- Integrate with frontend
 
 Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have contributed to expanding this template!
 
@@ -151,19 +150,19 @@ _Below is an example of how you can instruct your audience on installing and set
       composer install
    ```
    ```sh
-     cp .env.example .env or copy .env.example .env
+      cp .env.example .env or copy .env.example .env
    ```
     ```sh
-     php artisan key:generate
-   ```
-    ```sh
-     set your database name and credential in .env file
+      php artisan key:generate
    ```
    ```sh
-     php artisan migrate:fresh --seed
+      set your database name and credential in .env file
    ```
-    ```sh
-     php artisan serve
+   ```sh
+      php artisan migrate:fresh --seed
+   ```
+   ```sh
+      php artisan serve
    ```
    
 
@@ -179,11 +178,6 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- ROADMAP -->
-
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- CONTRIBUTING -->
 
@@ -206,8 +200,8 @@ Don't forget to give the project a star! Thanks again!
 
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
+Your Name - [@your_twitter](https://twitter.com/mahedianwar) - email@example.com
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+Project Link: [https://github.com/your_username/repo_name]([https://github.com/your_username/repo_name](https://github.com/AnwarHossainSR/laravel_payments_yt))
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
