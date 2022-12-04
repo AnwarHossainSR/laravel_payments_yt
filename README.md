@@ -126,15 +126,28 @@ _Below is an example of how you can instruct your audience on installing and set
    git clonehttps://github.com/AnwarHossainSR/laravel_payments_yt.git
    ```
 
-3. For React , Install NPM packages
+3. For React
 
+   ```sh
+   cd client
+   ```
    ```sh
    yarn install or npm install
    ```
+    ```sh
+   yarn run dev
+   ```
+   
+    ```sh
+    Go to http://localhost:3000
+   ```
 
-4. Enter your API
+4. For API
 
-   ```js
+  ```js
+      cd api
+   ```
+  ```js
       composer install
    ```
    ```js
@@ -142,6 +155,9 @@ _Below is an example of how you can instruct your audience on installing and set
    ```
     ```js
      php artisan key:generate
+   ```
+    ```js
+     set your database name and credential in .env file
    ```
    ```js
      php artisan migrate:fresh --seed
