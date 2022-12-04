@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\Payment;
 use App\Models\Plan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PaymentController extends Controller
@@ -29,7 +30,7 @@ class PaymentController extends Controller
             // 'phone_number_collection' => [
             //     'enabled' => true,
             // ],
-            'customer_email' => $request->email,
+            'customer_email' => Auth::user()->email,
             'line_items' => $lineItems,
             'mode' => 'subscription',
             'subscription_data' => [
@@ -45,6 +46,11 @@ class PaymentController extends Controller
         $order->session_id = $session->id;
         $order->user_id = auth()->user()->id;
         $order->save();
+
+        $user = auth()->user();
+        $user->plan_id = $plan->id;
+        $user->save();
+
         return response()->json([
             'url' => $session->url
         ]);
@@ -65,6 +71,10 @@ class PaymentController extends Controller
 
             $order = Order::where('session_id', $session->id)->first();
             if (!$order) {
+                $user = auth()->user();
+                $user->plan_id = null;
+                $user->save();
+
                 throw new NotFoundHttpException();
             }
             if ($order->status === 'unpaid') {
@@ -82,7 +92,7 @@ class PaymentController extends Controller
             $payment->date = $session->created;
             $payment->save();
 
-            return redirect()->away('http://localhost:3000/payment/success');
+            return redirect()->away('http://localhost:3000/plans/payment/success');
         } catch (\Exception $e) {
             throw new NotFoundHttpException();
         }

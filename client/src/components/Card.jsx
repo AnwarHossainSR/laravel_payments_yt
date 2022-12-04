@@ -1,8 +1,15 @@
 import { Button, Stack } from '@mui/material';
 import * as React from 'react';
+import { post } from '../api/CallAPi';
 import { colors } from '../utils/color';
 
 const Card = ({ plan, index }) => {
+  const handlePlan = async (planId) => {
+    const res = await post(`/checkout/${planId}`);
+    if (res.status === 200) {
+      window.location.replace(res.data.url);
+    }
+  };
   return (
     <Stack
       sx={{
@@ -37,6 +44,7 @@ const Card = ({ plan, index }) => {
         <Button
           variant='contained'
           sx={{ background: colors[index], borderRadius: 10, my: 2, py: 1 }}
+          onClick={() => handlePlan(plan?.id)}
         >
           Get Started
         </Button>

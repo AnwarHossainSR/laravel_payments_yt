@@ -40,7 +40,9 @@ console.log(user);
       <Stack>
         <h1>Dashboard</h1>
         <Stack pl={5} py={5}>
-          <h2>You have purchased our {user?.plan?.name} plan</h2>
+          <h2>{
+            user?.plan?.name ? `You have purchased our ${user?.plan?.name} plan` : 'You have not purchased any plan'
+          }</h2>
         </Stack>
       </Stack>
     </Stack>
